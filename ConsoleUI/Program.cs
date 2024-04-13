@@ -22,6 +22,7 @@ namespace ConsoleFileReader
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("1. Read Text");
                 Console.WriteLine("2. Read Xml File");
+                Console.WriteLine("3. Read Encrypted File");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("Option: ");
@@ -35,7 +36,10 @@ namespace ConsoleFileReader
                 case "2":
                      ReadFile(FileType.Xml);
                     break;
-                case "0":
+                case "3":
+                    ReadFile(FileType.EncryptedText);
+                    break;
+                    case "0":
                     Environment.Exit(0);
                     break;
                 default:
@@ -70,6 +74,14 @@ namespace ConsoleFileReader
 
             }
 
+            if (fileType == FileType.EncryptedText)
+            {
+
+                //Getting all files 
+                string directoryPath = "../../../../src/encrypted"; // Current directory
+                files = Directory.GetFiles(directoryPath);
+
+            }
 
 
             //Show all avalibe files
@@ -99,12 +111,10 @@ namespace ConsoleFileReader
                 Console.ForegroundColor = ConsoleColor.White;
 
 
-                //  selected file path to read the file via ReadFile Library 
-                Console.WriteLine( ReadFIle.ConsoleText(selectedFile,FileType.Text));
-               
-              
-               // ReadFIle.notepad(selectedFile, FileType.Text);
-               
+                //selected file path to read the file via ReadFile Library 
+                Console.WriteLine(ReadFIle.ConsoleText(selectedFile, fileType));
+                // ReadFIle.notepad(selectedFile, fileType);
+
 
             }
             //invalid input from the user
