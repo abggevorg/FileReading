@@ -1,0 +1,41 @@
+# Ignore bin and obj folders for compiled output
+bin/
+obj/
+
+# Ignore user-specific files and settings
+*.user
+*.suo
+*.cache
+*.vscode/
+*.vs/
+*.editorconfig
+
+# Ignore build output, logs, and temporary files
+build/
+logs/
+temp/
+*.log
+
+# Ignore package files
+packages/
+*.nupkg
+*.paket/
+
+# Ignore node_modules directory for Node.js projects
+node_modules/
+
+# Ignore Visual Studio files
+.vscode/
+*.suo
+*.user
+*.sln
+
+# Ignore JetBrains IDE files
+.idea/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore NuGet packages
+*.nuget.props
+*.nuget.targets
