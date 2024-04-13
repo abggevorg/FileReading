@@ -1,7 +1,14 @@
->eton/<
->ydob/<!dnekeew siht em tegrof t'noD>ydob<
->gnidaeh/<rednimeR>gnidaeh<
->morf/<inaJ>morf<
->ot/<evoT>ot<
->eton<
->?"8-ftu"=gnidocne "0.1"=noisrev lmx?<
+<?xml version="1.0" encoding="utf-8"?>
+<User>
+    <ID>3</ID>
+    <FirstName>Gevorg</FirstName>
+    <LastName>Abgaryan</LastName>
+    <Age>27</Age>
+    <Email>Gevorg@fileread.com</Email>
+    <Address>
+      <Street>Erwtenstraat</Street>
+      <City>Antwerp</City>
+      <State>AP</State>
+      <ZipCode>2060</ZipCode>
+    </Address>
+</User>

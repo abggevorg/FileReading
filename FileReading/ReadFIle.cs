@@ -21,33 +21,8 @@ public class ReadFIle
     public  string ConsoleText(string fileLocation, FileType filetype, string? role)
     {
         string fileName = Path.GetFileName(fileLocation);
-        if (filetype == FileType.Text) {
-            // Console.Write(fileLocation);
-            try
-            {
 
-                if (File.Exists(fileLocation))
-                {
-
-                    string readText = File.ReadAllText(fileLocation);
-                    return readText;
-                }
-                else
-                {
-
-                    throw new FileNotFoundException("File not found/File does not exist. ", fileName);
-                }
-            }
-            catch (Exception e)
-            {
-                // Console.Write("Error reading file:" + e.Message);
-                return string.Format("Error reading file:" + e.Message);
-
-            }
-        }
-
-
-        if (filetype == FileType.Xml)
+        if (filetype == FileType.Text || filetype == FileType.Xml)
         {
             try
             {
@@ -112,24 +87,9 @@ public class ReadFIle
     {
         string readText = "";
 
-        if (filetype == FileType.Text )
-        {
-            // Check if the file exists
-            if (File.Exists(fileLocation))
-            {
-                // Use Process.Start to open the file with the default application
-                Process.Start("notepad.exe", fileLocation);
-               // readText = File.ReadAllText(fileLocation);
+   
 
-            }
-            else
-            {
-                Console.WriteLine("File not found/File does not exist.");
-            }
-
-        }
-
-        if(filetype == FileType.Xml )
+        if(filetype == FileType.Xml || filetype == FileType.Text)
         {
             try
             {
@@ -139,7 +99,18 @@ public class ReadFIle
                 }
                 else
                 {
-                    Process.Start("notepad.exe", fileLocation);
+                    // Check if the file exists
+                    if (File.Exists(fileLocation))
+                    {
+                        // Use Process.Start to open the file with the default application
+                        Process.Start("notepad.exe", fileLocation);
+                        // readText = File.ReadAllText(fileLocation);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("File not found/File does not exist.");
+                    }
                 }
 
                 // Read and return the content of the XML file

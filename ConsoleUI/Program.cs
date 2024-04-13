@@ -70,7 +70,8 @@ namespace ConsoleFileReader
                 //Getting all files 
                 string directoryPath = "../../../../src/text"; // Current directory
                 files = Directory.GetFiles(directoryPath, "*.txt");
-
+                Console.Write("Please give your role (admin|user): ");
+                role = Console.ReadLine();
             }
 
             //if file is a XML file, search only XML files and late the user choose one of them. ------------------
@@ -122,15 +123,15 @@ namespace ConsoleFileReader
 
 
                 //selected file path to read the file via ReadFile Library 
-        
-                /* */
+
+                /*   */
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("-----------------------------------");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(readFIle.ConsoleText(selectedFile, fileType, role));
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("-----------------------------------");
-                /* */
+                /*   */
                 //selected file path to read the file via ReadFile Library open files with notepad - comment out line below and comment code above to see the result
 
                 // readFIle.notepad(selectedFile, fileType, role);
