@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<User>
+    <ID>0</ID>
+    <FirstName>Admin</FirstName>
+    <LastName>Admin</LastName>
+    <Age>99</Age>
+    <Email>admin@fileread.com</Email>
+    <Address>
+      <Street>456 Oak St</Street>
+      <City>Another Town</City>
+      <State>NY</State>
+      <ZipCode>54321</ZipCode>
+    </Address>
+</User>

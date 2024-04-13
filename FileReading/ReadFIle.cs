@@ -1,4 +1,6 @@
 ﻿namespace FileReadingLBR;
+
+using FileReadingLBR.Security;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -11,11 +13,15 @@ Gevorg Abgaryan
 */
 public class ReadFIle
 {
+    readonly IRoleSecurity _security;
 
-    public static string ConsoleText(string fileLocation, FileType filetype)
+    public ReadFIle(IRoleSecurity security) {
+        _security = security;
+    }
+    public  string ConsoleText(string fileLocation, FileType filetype, string? role)
     {
         string fileName = Path.GetFileName(fileLocation);
-        if (filetype == FileType.Text || filetype == FileType.Xml) {
+        if (filetype == FileType.Text) {
             // Console.Write(fileLocation);
             try
             {
@@ -40,9 +46,34 @@ public class ReadFIle
             }
         }
 
-        //if encrypted file
-        if (filetype == FileType.EncryptedText)
+
+        if (filetype == FileType.Xml)
         {
+            try
+            {
+                if (!_security.HasPermission(role, fileLocation))
+                {
+                    throw new UnauthorizedAccessException("Access denied.");
+                }
+                else
+                {
+                    return File.ReadAllText(fileLocation);
+                }
+
+                // Read and return the content of the XML file
+
+            }
+            catch (Exception e)
+            {
+                // Console.Write("Error reading file:" + e.Message);
+                return string.Format("Error reading file: " + e.Message);
+
+            }
+        }
+
+            //if encrypted file
+            if (filetype == FileType.EncryptedText)
+            {
             //change the encription statagy if needed. can be any encription class implementing IEncryptionStrategy interface
             IEncryptionStrategy encryptionStrategy = new SimpleEncryptionStrategy();
             try
@@ -77,11 +108,11 @@ public class ReadFIle
 
 
     //extra for GUI can also be used in ConsoneUI 
-    public static async  void notepad(string fileLocation, FileType filetype)
+    public  async  void notepad(string fileLocation, FileType filetype, string? role)
     {
         string readText = "";
 
-        if (filetype == FileType.Text || filetype == FileType.Xml)
+        if (filetype == FileType.Text )
         {
             // Check if the file exists
             if (File.Exists(fileLocation))
@@ -96,6 +127,30 @@ public class ReadFIle
                 Console.WriteLine("File not found/File does not exist.");
             }
 
+        }
+
+        if(filetype == FileType.Xml )
+        {
+            try
+            {
+                if (!_security.HasPermission(role, fileLocation))
+                {
+                    throw new UnauthorizedAccessException("Access denied.");
+                }
+                else
+                {
+                    Process.Start("notepad.exe", fileLocation);
+                }
+
+                // Read and return the content of the XML file
+
+            }
+            catch (Exception e)
+            {
+                // Console.Write("Error reading file:" + e.Message);
+                Console.WriteLine( string.Format("Error reading file: " + e.Message));
+
+            }
         }
 
         //if encrypted file

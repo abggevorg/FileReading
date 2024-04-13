@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<User>
+    <ID>9</ID>
+    <FirstName>John</FirstName>
+    <LastName>Doe</LastName>
+    <Age>30</Age>
+    <Email>john.doe@example.com</Email>
+    <Address>
+      <Street>123 Main St</Street>
+      <City>Anytown</City>
+      <State>CA</State>
+      <ZipCode>12345</ZipCode>
+    </Address>
+</User>

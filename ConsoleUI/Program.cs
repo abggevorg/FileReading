@@ -1,4 +1,5 @@
 ﻿using FileReadingLBR;
+using FileReadingLBR.Security;
 using System;
 using System.IO;
 using System.Xml;
@@ -9,6 +10,7 @@ namespace ConsoleFileReader
     {
         static void Main(string[] args)
         {
+          
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("File Read Application - Console UI:");
 
@@ -23,6 +25,7 @@ namespace ConsoleFileReader
                 Console.WriteLine("1. Read Text");
                 Console.WriteLine("2. Read Xml File");
                 Console.WriteLine("3. Read Encrypted File");
+                Console.WriteLine("9. Clear history");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("Option: ");
@@ -39,7 +42,10 @@ namespace ConsoleFileReader
                 case "3":
                     ReadFile(FileType.EncryptedText);
                     break;
-                    case "0":
+                case "9":
+                    Console.Clear();
+                    break;
+                case "0":
                     Environment.Exit(0);
                     break;
                 default:
@@ -52,6 +58,9 @@ namespace ConsoleFileReader
 
         static void ReadFile(FileType fileType)
         {
+            IRoleSecurity security = new SimpleRoleSecurity();
+            ReadFIle readFIle = new ReadFIle(security);
+            string role = null;
 
             string[] files = [];
 
@@ -71,7 +80,8 @@ namespace ConsoleFileReader
                 //Getting all files 
                 string directoryPath = "../../../../src/xml"; // Current directory
                 files = Directory.GetFiles(directoryPath, "*.xml");
-
+                Console.Write("Please give your role (admin|user): ");
+                role = Console.ReadLine();
             }
 
             if (fileType == FileType.EncryptedText)
@@ -80,7 +90,7 @@ namespace ConsoleFileReader
                 //Getting all files 
                 string directoryPath = "../../../../src/encrypted"; // Current directory
                 files = Directory.GetFiles(directoryPath);
-
+        
             }
 
 
@@ -112,8 +122,18 @@ namespace ConsoleFileReader
 
 
                 //selected file path to read the file via ReadFile Library 
-                Console.WriteLine(ReadFIle.ConsoleText(selectedFile, fileType));
-                // ReadFIle.notepad(selectedFile, fileType);
+        
+                /* */
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("-----------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(readFIle.ConsoleText(selectedFile, fileType, role));
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("-----------------------------------");
+                /* */
+                //selected file path to read the file via ReadFile Library open files with notepad - comment out line below and comment code above to see the result
+
+                // readFIle.notepad(selectedFile, fileType, role);
 
 
             }
