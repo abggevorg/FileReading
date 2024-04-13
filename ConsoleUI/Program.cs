@@ -21,6 +21,7 @@ namespace ConsoleFileReader
                 Console.WriteLine("Select an option:");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("1. Read Text");
+                Console.WriteLine("2. Read Xml File");
                 Console.WriteLine("0. Exit");
 
                 Console.Write("Option: ");
@@ -29,41 +30,64 @@ namespace ConsoleFileReader
             switch (userInput)
             {
                 case "1":
-                    ReadTextFile();
+                    ReadFile(FileType.Text);
                     break;
-      
+                case "2":
+                     ReadFile(FileType.Xml);
+                    break;
                 case "0":
                     Environment.Exit(0);
                     break;
                 default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Invalid option. Please try again.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid option. Please try again.");
                     break;
                 }
             }
         }
 
-        static void ReadTextFile()
-        {  
-            Console.WriteLine("");
-      
-       
-            //Getting all files 
-            string directoryPath = "../../../../src/text"; // Current directory
-            string[] files = Directory.GetFiles(directoryPath, "*.txt");
+        static void ReadFile(FileType fileType)
+        {
+
+            string[] files = [];
+
+            //if file is a txt file, search only text files and late the user choose one of them.------------------
+            if (fileType == FileType.Text) {
+              
+                //Getting all files 
+                string directoryPath = "../../../../src/text"; // Current directory
+                files = Directory.GetFiles(directoryPath, "*.txt");
+
+            }
+
+            //if file is a XML file, search only XML files and late the user choose one of them. ------------------
+            if (fileType == FileType.Xml)
+            {
+               
+                //Getting all files 
+                string directoryPath = "../../../../src/xml"; // Current directory
+                files = Directory.GetFiles(directoryPath, "*.xml");
+
+            }
+
+
 
             //Show all avalibe files
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Select a file:");
             Console.ForegroundColor = ConsoleColor.White;
+            //showing files
             for (int i = 0; i < files.Length; i++)
-            {
-                Console.WriteLine((i + 1) + ". " + Path.GetFileName(files[i]));
-            }
+                {
+                    Console.WriteLine((i + 1) + ". " + Path.GetFileName(files[i]));
+                }
 
             Console.Write("Enter the number of the file to select: ");
             string userInput = Console.ReadLine();
 
+
+            //get the selected file
             if (int.TryParse(userInput, out int selectedIndex) && selectedIndex > 0 && selectedIndex <= files.Length)
             {
                 string selectedFile = files[selectedIndex - 1];
@@ -73,18 +97,24 @@ namespace ConsoleFileReader
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(fileName + "\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                //  selected file path to read the file conteConsole.ForegroundColor = ConsoleColor.Green;nt via ReadFile Library 
-                Console.WriteLine( ReadFIle.Text(selectedFile));
 
-            
+
+                //  selected file path to read the file via ReadFile Library 
+                Console.WriteLine( ReadFIle.ConsoleText(selectedFile,FileType.Text));
+               
+              
+               // ReadFIle.notepad(selectedFile, FileType.Text);
+               
+
             }
+            //invalid input from the user
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid selection.");
+                Console.ForegroundColor = ConsoleColor.White;
+          
             }
-        }
-
-
-
-    }
+        }    
+    }  
 }
