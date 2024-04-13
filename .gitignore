@@ -28,7 +28,6 @@ node_modules/
 .vscode/
 *.suo
 *.user
-*.sln
 
 # Ignore JetBrains IDE files
 .idea/
