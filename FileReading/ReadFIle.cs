@@ -83,18 +83,26 @@ public class ReadFIle
             try
             {
 
-                if (File.Exists(fileLocation))
+                if (!_security.HasPermission(role, fileLocation))
                 {
-
-                    string json = File.ReadAllText(fileLocation);
-                    string jsonFormatted = JValue.Parse(json).ToString(Newtonsoft.Json.Formatting.Indented);
-                    return jsonFormatted;
+                    throw new UnauthorizedAccessException("Access denied.");
                 }
                 else
                 {
+                    if (File.Exists(fileLocation))
+                    {
 
-                    throw new FileNotFoundException("File not found/File does not exist. ", fileName);
+                        string json = File.ReadAllText(fileLocation);
+                        string jsonFormatted = JValue.Parse(json).ToString(Newtonsoft.Json.Formatting.Indented);
+                        return jsonFormatted;
+                    }
+                    else
+                    {
+
+                        throw new FileNotFoundException("File not found/File does not exist. ", fileName);
+                    }
                 }
+               
             }
             catch (Exception e)
             {
