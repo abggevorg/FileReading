@@ -4,5 +4,6 @@ namespace FileReadingLBR;
 {
     Text,
     Xml,
-    EncryptedText
+    EncryptedText,
+    Json
 }

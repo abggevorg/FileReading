@@ -1,0 +1,14 @@
+{
+    "ID": 0,
+    "FirstName": "Admin",
+    "LastName": "User",
+    "Role": "admin",
+    "Age": 35,
+    "Email": "admin@example.com",
+    "Address": {
+      "Street": "456 Admin St",
+      "City": "Admin City",
+      "State": "Admin State",
+      "ZipCode": "54321"
+    }
+  }

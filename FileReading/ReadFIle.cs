@@ -1,6 +1,7 @@
 ﻿namespace FileReadingLBR;
 
 using FileReadingLBR.Security;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -14,9 +15,11 @@ Gevorg Abgaryan
 public class ReadFIle
 {
     readonly IRoleSecurity _security;
+    readonly IEncryptionStrategy _encryptionStrategy;
 
-    public ReadFIle(IRoleSecurity security) {
+    public ReadFIle(IRoleSecurity security, IEncryptionStrategy encryptionStrategy) {
         _security = security;
+        _encryptionStrategy = encryptionStrategy;
     }
     public  string ConsoleText(string fileLocation, FileType filetype, string? role)
     {
@@ -47,10 +50,9 @@ public class ReadFIle
         }
 
             //if encrypted file
-            if (filetype == FileType.EncryptedText)
+        if (filetype == FileType.EncryptedText)
             {
             //change the encription statagy if needed. can be any encription class implementing IEncryptionStrategy interface
-            IEncryptionStrategy encryptionStrategy = new SimpleEncryptionStrategy();
             try
             {
 
@@ -58,7 +60,7 @@ public class ReadFIle
                 {
 
                     string encryptedText = File.ReadAllText(fileLocation);
-                    string decryptedText = encryptionStrategy.Decrypt(encryptedText);
+                    string decryptedText = _encryptionStrategy.Decrypt(encryptedText);
                     return decryptedText;
                 }
                 else
@@ -76,6 +78,37 @@ public class ReadFIle
           
 
         }
+        //if Json file
+        if (filetype == FileType.Json) {
+            try
+            {
+
+                if (File.Exists(fileLocation))
+                {
+
+                    string json = File.ReadAllText(fileLocation);
+                    string jsonFormatted = JValue.Parse(json).ToString(Newtonsoft.Json.Formatting.Indented);
+                    return jsonFormatted;
+                }
+                else
+                {
+
+                    throw new FileNotFoundException("File not found/File does not exist. ", fileName);
+                }
+            }
+            catch (Exception e)
+            {
+                // Console.Write("Error reading file:" + e.Message);
+                return string.Format("Error reading file:" + e.Message);
+
+            }
+
+
+
+        }
+
+
+
         return string.Empty;
     }
 
@@ -112,8 +145,6 @@ public class ReadFIle
                         Console.WriteLine("File not found/File does not exist.");
                     }
                 }
-
-                // Read and return the content of the XML file
 
             }
             catch (Exception e)

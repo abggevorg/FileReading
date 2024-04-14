@@ -1,5 +1,7 @@
 ﻿using FileReadingLBR;
 using FileReadingLBR.Security;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Xml;
@@ -10,7 +12,25 @@ namespace ConsoleFileReader
     {
         static void Main(string[] args)
         {
-          
+
+
+
+            var test = new
+            {
+                name = "rick",
+                company = "Westwind",
+                entered = DateTime.UtcNow
+            };
+
+
+            string json = JsonConvert.SerializeObject(test);
+            Console.WriteLine(json); // single line JSON string
+
+            string jsonFormatted = JValue.Parse(json).ToString(Newtonsoft.Json.Formatting.Indented);
+
+            Console.WriteLine(jsonFormatted);
+
+    
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("File Read Application - Console UI:");
 
@@ -25,6 +45,7 @@ namespace ConsoleFileReader
                 Console.WriteLine("1. Read Text");
                 Console.WriteLine("2. Read Xml File");
                 Console.WriteLine("3. Read Encrypted File");
+                Console.WriteLine("4. Read Json File");
                 Console.WriteLine("9. Clear history");
                 Console.WriteLine("0. Exit");
 
@@ -42,7 +63,10 @@ namespace ConsoleFileReader
                 case "3":
                     ReadFile(FileType.EncryptedText);
                     break;
-                case "9":
+                case "4":
+                    ReadFile(FileType.Json);
+                    break;
+                    case "9":
                     Console.Clear();
                     break;
                 case "0":
@@ -59,7 +83,8 @@ namespace ConsoleFileReader
         static void ReadFile(FileType fileType)
         {
             IRoleSecurity security = new SimpleRoleSecurity();
-            ReadFIle readFIle = new ReadFIle(security);
+            IEncryptionStrategy encryption = new SimpleEncryptionStrategy();
+            ReadFIle readFIle = new ReadFIle(security, encryption);
             string role = null;
 
             string[] files = [];
@@ -93,7 +118,14 @@ namespace ConsoleFileReader
                 files = Directory.GetFiles(directoryPath);
         
             }
+            if (fileType == FileType.Json)
+            {
 
+                //Getting all files 
+                string directoryPath = "../../../../src/json"; // Current directory
+                files = Directory.GetFiles(directoryPath,"*.json");
+
+            }
 
             //Show all avalibe files
             Console.WriteLine("");
