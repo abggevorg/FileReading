@@ -13,24 +13,6 @@ namespace ConsoleFileReader
         static void Main(string[] args)
         {
 
-
-
-            var test = new
-            {
-                name = "rick",
-                company = "Westwind",
-                entered = DateTime.UtcNow
-            };
-
-
-            string json = JsonConvert.SerializeObject(test);
-            Console.WriteLine(json); // single line JSON string
-
-            string jsonFormatted = JValue.Parse(json).ToString(Newtonsoft.Json.Formatting.Indented);
-
-            Console.WriteLine(jsonFormatted);
-
-    
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("File Read Application - Console UI:");
 
@@ -124,7 +106,8 @@ namespace ConsoleFileReader
                 //Getting all files 
                 string directoryPath = "../../../../src/json"; // Current directory
                 files = Directory.GetFiles(directoryPath,"*.json");
-
+                Console.Write("Please give your role (admin|user): ");
+                role = Console.ReadLine();
             }
 
             //Show all avalibe files
